@@ -9,7 +9,7 @@ export default function PostBox({post}) {
  console.log();
  
   return (
-    <div   className="pr-2 pl-2">
+    <div   className="pr-2  pl-10 ">
       <div className=" text-white py-10 lg:mt-7 rounded-lg mt-2">
         <div className="flex justify-start">
           <img
