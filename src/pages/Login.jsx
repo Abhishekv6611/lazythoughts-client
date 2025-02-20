@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { URL } from "../store/url";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Login() {
   const navigate=useNavigate()
+  const[isLoading,setIsLoading]=useState(false)
  const[form,setForm]=useState({
   email:"",
   password:""
@@ -17,9 +19,10 @@ const handleLogin = async (e) => {
     if(!form.email|| !form.password){
       toast.error("please Fill the form")
     } else{
+      setIsLoading(true)
       const response=await axios.post(`${URL}/login`,form)
       if(response.data.success){
-        toast.success("Login Success")
+        toast.success("Login Successfully")
         sessionStorage.setItem("token",response.data.token)
         window.dispatchEvent(new Event("storage"));
         navigate('/dashboard')
@@ -27,9 +30,13 @@ const handleLogin = async (e) => {
         toast.error("Invalid Email or Password")
       }
     }
+
   } catch (error) {
-    console.log(error); 
-  }
+    console.log(error);
+  }finally {
+      setIsLoading(false); 
+    }
+
 }
 
 
@@ -93,7 +100,14 @@ const handleLogin = async (e) => {
           type="submit"
           className="w-full rounded-md bg-[#A27B5C] px-4 py-2 text-sm font-medium text-white shadow hover:bg-[#8d6c51] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
-          Sign In
+      {
+          isLoading?
+          <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+        :
+          "Sign In"
+        }
         </button>
       </div>
 

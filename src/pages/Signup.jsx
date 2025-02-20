@@ -3,10 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import toast from "react-hot-toast";
 import { URL } from "../store/url";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Signup() {
   const navigate = useNavigate();
-  
+  const[isLoading,setIsLoading]=useState(false)
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,19 +26,27 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
     console.log(formData);
-
+    
     try {
+      if(formData.password.length<6){
+        toast.error("Password must be 6 characters");
+        return
+      }
+      setIsLoading(true)
       const response = await axios.post(`${URL}/signup`, formData);
       if(response.data.success){
         toast.success("Signup successful!");
       }
       if(response.data.token){
         sessionStorage.setItem("token",response.data.token)
+        navigate('/dashboard')
       }
-        navigate("/dashboard");
     } catch (error) {
       console.error("Signup failed:", error);
-      toast.error("Email is already existed");
+      toast.error("An error occurred during signup"); // Handle unexpected errors
+
+    }finally{
+      setIsLoading(false)
     }
   };
 
@@ -118,7 +128,15 @@ export default function Signup() {
                 type="submit"
                 className="w-full rounded-md bg-[#A27B5C] px-4 py-2 text-sm font-medium text-white shadow hover:bg-[#8d6c51] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                Sign Up
+                 {
+          isLoading?
+          <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+        :
+          "Sign Up"
+        }
+                
               </button>
             </div>
           </form>

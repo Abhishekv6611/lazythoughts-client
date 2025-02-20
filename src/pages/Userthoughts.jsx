@@ -164,52 +164,55 @@ export default function Userthoughts() {
 
           {/* Modal for Adding Thought */}
           {isOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-[#DCD7C9] rounded-lg shadow-lg w-4/5 md:w-1/2">
-                <div className="flex justify-between items-center p-4 border-b">
-                  <h2 className="text-lg font-bold">Post your Thought</h2>
-                  <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-black">
-                    &times;
-                  </button>
-                </div>
-                <div className="p-4 flex flex-col">
-                  <label htmlFor="title" className="mb-1">
-                    Title
-                  </label>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md animate-fadeIn">
+            <div className="bg-gradient-to-br from-[#2C3930] to-[#A27B5C] text-white rounded-xl shadow-2xl w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 p-6 relative">
+              {/* Header */}
+              <div className="flex justify-between items-center pb-3 border-b border-white/20">
+                <h2 className="text-lg font-semibold tracking-wide">Share Your Thought</h2>
+                <button onClick={() => setIsOpen(false)} className="text-white transition duration-200 text-2xl">
+                  &times;
+                </button>
+              </div>
+          
+              {/* Input Fields */}
+              <div className="mt-4 space-y-4">
+                <div>
+                  <label htmlFor="title" className="text-sm font-medium tracking-wide">Title</label>
                   <input
                     type="text"
                     id="title"
                     value={thought.title}
                     onChange={(e) => setThought({ ...thought, title: e.target.value })}
-                    className="p-2 bg-slate-200 rounded mb-3"
+                    className="mt-1 w-full p-3 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:ring-2 focus:ring-white/50 outline-none transition"
+                    placeholder="Enter Idea Title"
                   />
-                  <label htmlFor="thought" className="mb-1">
-                    Thought
-                  </label>
+                </div>
+          
+                <div>
+                  <label htmlFor="thought" className="text-sm font-medium tracking-wide">Your Thought</label>
                   <textarea
                     id="thought"
                     value={thought.description}
                     onChange={(e) => setThought({ ...thought, description: e.target.value })}
-                    className="p-2 bg-slate-200 rounded mb-3"
+                    className="mt-1 w-full p-3 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:ring-2 focus:ring-white/50 outline-none transition resize-none"
                     rows="4"
-                  ></textarea>
-                </div>
-                <div className="flex justify-end p-4 border-t">
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="bg-[#A27B5C] px-4 py-2 rounded hover:bg-[#946f50] text-[#3F4F44]"
-                  >
-                    Close
-                  </button>
-                  <button
-                    onClick={handleSubmit}
-                    className="ml-2 bg-[#2C3930] text-white px-4 py-2 rounded hover:bg-[#1e2f24]"
-                  >
-                    Post
-                  </button>
+                    placeholder="Share to express your idea"
+                  />
                 </div>
               </div>
+          
+              {/* Footer Buttons */}
+              <div className="flex justify-end mt-5">
+                <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-all">
+                  Close
+                </button>
+                <button onClick={handleSubmit} className="ml-3 px-5 py-2 text-sm font-medium bg-white text-[#2C3930] hover:bg-gray-200 rounded-lg transition-all">
+                  Post 
+                </button>
+              </div>
             </div>
+          </div>
+          
           )}
 
           {/* Display Thoughts */}
@@ -252,22 +255,55 @@ export default function Userthoughts() {
         </div>
       </div>
       {editModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-[#DCD7C9] rounded-lg shadow-lg w-4/5 md:w-1/2">
-            <div className="flex justify-between items-center p-4 border-b">
-              <h2 className="text-lg font-bold">Edit Thought</h2>
-              <button onClick={() => setEditModal(false)} className="text-gray-400 hover:text-black">&times;</button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md animate-fadeIn">
+        <div className="bg-gradient-to-br from-[#2C3930] to-[#A27B5C] text-white rounded-xl shadow-2xl w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 p-6 relative">
+          {/* Header */}
+          <div className="flex justify-between items-center pb-3 border-b border-white/20">
+            <h2 className="text-lg font-semibold tracking-wide">Edit Your Thought</h2>
+            <button onClick={() => setEditModal(false)} className="text-white transition duration-200 text-2xl">
+              &times;
+            </button>
+          </div>
+      
+          {/* Input Fields */}
+          <div className="mt-4 space-y-4">
+            <div>
+              <label htmlFor="edit-title" className="text-sm font-medium tracking-wide">Title</label>
+              <input
+                type="text"
+                id="edit-title"
+                value={editData.title}
+                onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                className="mt-1 w-full p-3 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:ring-2 focus:ring-white/50 outline-none transition"
+                placeholder="Edit your title..."
+              />
             </div>
-            <div className="p-4 flex flex-col">
-              <input type="text" value={editData.title} onChange={(e) => setEditData({ ...editData, title: e.target.value })} className="p-2 bg-slate-100 rounded mb-3" />
-              <textarea value={editData.description} onChange={(e) => setEditData({ ...editData, description: e.target.value })} className="p-2 bg-slate-100 rounded mb-3" rows="4"></textarea>
-            </div>
-            <div className="flex justify-end p-4 border-t">
-              <button onClick={() => setEditModal(false)} className="bg-[#A27B5C] hover:bg-[#946f50] text-[#3F4F44] px-4 py-2 rounded ">Cancel</button>
-              <button onClick={handleUpdate} className="ml-2 bg-[#2C3930] text-white px-4 py-2 rounded hover:bg-[#1e2f24]">Update</button>
+      
+            <div>
+              <label htmlFor="edit-description" className="text-sm font-medium tracking-wide">Thought</label>
+              <textarea
+                id="edit-description"
+                value={editData.description}
+                onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                className="mt-1 w-full p-3 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:ring-2 focus:ring-white/50 outline-none transition resize-none"
+                rows="4"
+                placeholder="Modify your thought..."
+              />
             </div>
           </div>
+      
+          {/* Footer Buttons */}
+          <div className="flex justify-end mt-5">
+            <button onClick={() => setEditModal(false)} className="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-all">
+              Cancel
+            </button>
+            <button onClick={handleUpdate} className="ml-3 px-5 py-2 text-sm font-medium bg-white text-[#2C3930] hover:bg-gray-200 rounded-lg transition-all">
+              Update 
+            </button>
+          </div>
         </div>
+      </div>
+      
       )}
     </div>
   );

@@ -151,7 +151,7 @@ const handleLogout=()=>{
                     </div>
                     <div className="flex flex-col">
                         <label className="mb-1 text-[#DCD7C9]">Email</label>
-                        <input type="email" value={userDetails.EmailAddress} className="p-2 rounded-sm text-center" />
+                        <input type="email"  defaultValue={userDetails.EmailAddress} className="p-2 rounded-sm text-center" />
                     </div>
                     <span className="flex justify-center items-center mt-3 gap-2">
                         <FaRegCircle className="bg-green-500 rounded-2xl border-none" />
