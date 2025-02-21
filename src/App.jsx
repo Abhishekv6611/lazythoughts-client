@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Settings from "./pages/Settings";
+import ProtectedLayout from "./ProtectedLayout";
 
 
 
@@ -41,11 +42,13 @@ export default function App() {
  
 
       
-      
-      <Route path="/dashboard"  element={token?<Dashboard/>:<Navigate to={'/signin'}/>} />
-      <Route path="/yourthoughts"  element={token?<Userthoughts/>:<Navigate to={'/signin'}/>} />
-      <Route path="/profile"  element={token?<Profile/>:<Navigate to={'/signin'}/>} />
-      <Route path="/settings"  element={token?<Settings/>:<Navigate to={'/signin'}/>} />
+      <Route element={<ProtectedLayout/>}>
+      <Route path="/dashboard"  element={<Dashboard/>} />
+      <Route path="/yourthoughts"  element={<Userthoughts/>}/>
+      <Route path="/profile"  element={<Profile/>} />
+      <Route path="/settings"  element={<Settings/>}/>
+      </Route>
+
       <Route path="*" element={<NotFound />} />
 
     </Routes>
