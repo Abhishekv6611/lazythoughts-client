@@ -52,7 +52,7 @@ const SideBar = ({ handleLogout,UserDetails }) => {
   className="flex items-center gap-3 p-3 transition rounded-md hover:bg-[#A27B5C]"
 >
   <FaHome size={18} />
-  {(isOpen || window.innerWidth >= 1024) && <span>Thoughts</span>}
+  {(isOpen || window.innerWidth >= 1024) && <span className="font-semibold">Thoughts</span>}
 </Link>
 
 <Link
@@ -60,7 +60,7 @@ const SideBar = ({ handleLogout,UserDetails }) => {
   className="flex items-center gap-3 p-3 transition rounded-md hover:bg-[#A27B5C]"
 >
   <FaUser size={18} />
-  {(isOpen || window.innerWidth >= 1024) && <span>Profile</span>}
+  {(isOpen || window.innerWidth >= 1024) && <span className="font-semibold">Profile</span>}
 </Link>
 
 <Link
@@ -68,7 +68,7 @@ const SideBar = ({ handleLogout,UserDetails }) => {
   className="flex items-center gap-3 p-3 transition rounded-md hover:bg-[#A27B5C]"
 >
   <FaCog size={18} />
-  {(isOpen || window.innerWidth >= 1024) && <span>Settings</span>}
+  {(isOpen || window.innerWidth >= 1024) && <span className="font-semibold">Settings</span>}
 </Link>
 
           </nav>

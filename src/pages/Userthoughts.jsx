@@ -15,7 +15,10 @@ export default function Userthoughts() {
   const [refresh, setRefresh] = useState(false); // To trigger data re-fetch
   const [editData, setEditData] = useState({ id: "", title: "", description: "" });
   const [editModal, setEditModal] = useState(false);
+  const [postCount, setPostCount] = useState(0);
+  const [premium, setPremium] = useState();
  const [userImg,setUserImg]=useState('')
+ const[postLimitModal,setPostLimitModal]=useState(false)
   // Date formatter
   const formatter = new Intl.DateTimeFormat("en-GB", {
     year: "numeric",
@@ -35,33 +38,45 @@ export default function Userthoughts() {
       toast.error("Failed to fetch thoughts");
     }
   };
+
   const userDetails=async()=>{
     const token=sessionStorage.getItem("token")
     try {
       const result = await axios.get(`${URL}/getuserDetails?token=${token}`);
       setUserImg(result.data.profilePic);
+       setPostCount(result.data.postCount);
+      setPremium(result.data.premium);
+      console.log(postCount,premium);  
     } catch (error) {
       console.error("Error fetching user details:", error.response?.data || error);
     }
   }
 
+  const CheckingUserState=()=>{
+    if(!premium && postCount >= 3){
+      setPostLimitModal(true)
+      setIsOpen(false)
+    }
+  }
 
 
   useEffect(() => {
     fetchThoughts();
     userDetails()
-  }, [refresh]);
+  }, [refresh,postCount]);
 
   // Handle form submission for adding a new thought
   const handleSubmit = async () => {
+    CheckingUserState()
     try {
       const token = sessionStorage.getItem("token");
       await axios.post(`${URL}/uploadThoughts?token=${token}`, thought);
       toast.success("Thought added successfully!");
-      setRefresh(!refresh); // Trigger re-fetch
-      setIsOpen(false); // Close modal
       setThought({ title: "", description: "" }); // Reset form
+      setRefresh(!refresh); 
+      setIsOpen(false); // Close modal
     } catch (error) {
+      setThought({ title: "", description: "" }); // Reset form
       console.error("Error adding thought:", error);
       toast.error("Failed to add thought");
     }
@@ -83,18 +98,7 @@ export default function Userthoughts() {
     }
   };
 
-  // Handle updating a thought
-  // const updatePost = async (_id, updatedData) => {
-  //   try {
-  //     const token = sessionStorage.getItem("token");
-  //     await axios.put(`${URL}/updatepost`, { id: _id, ...updatedData }, { params: { token } });
-  //     toast.success("Thought updated successfully!");
-  //     setRefresh(!refresh); // Trigger re-fetch
-  //   } catch (error) {
-  //     console.error("Error updating thought:", error);
-  //     toast.error("Failed to update thought");
-  //   }
-  // };
+
 
   // Handle logout
   const handleLogout = () => {
@@ -222,7 +226,7 @@ export default function Userthoughts() {
                 <div className="flex items-center space-x-4">
                   <img
                     className="w-12 h-12 rounded-full"
-                    src={userImg}
+                    src={userImg ||"https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg"}
                     alt="userDp"
                   />
                   <div>
@@ -305,6 +309,71 @@ export default function Userthoughts() {
       </div>
       
       )}
+
+{
+  postLimitModal && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md animate-fadeIn">
+      <div className="bg-gradient-to-br from-[#2C3930] to-[#A27B5C] text-white rounded-xl shadow-2xl w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 p-6 relative">
+        {/* Header */}
+        <div className="flex justify-between items-center pb-3 border-b border-white/20">
+          <h2 className="text-lg font-semibold tracking-wide">Post Limit Reached</h2>
+          <button
+            onClick={() => setPostLimitModal(false)} // Add a state to control this modal
+            className="text-white transition duration-200 text-2xl hover:text-gray-300"
+          >
+            &times;
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="mt-4 space-y-4">
+          <div className="flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-16 w-16 text-yellow-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
+          <p className="text-center text-gray-200">
+            You have reached the maximum number of posts allowed for free users.
+          </p>
+          <p className="text-center text-gray-200">
+            Upgrade to a <span className="font-semibold text-yellow-400">Premium Account</span> to
+            continue posting unlimited ideas.
+          </p>
+        </div>
+
+        {/* Footer Buttons */}
+        <div className="flex justify-end mt-5 space-x-3">
+          <button
+            onClick={() => setPostLimitModal(false)} // Add a state to control this modal
+            className="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-all"
+          >
+            Close
+          </button>
+          <button
+            onClick={() => {
+              // Redirect to premium upgrade page
+              window.location.href = "/settings";
+            }}
+            className="px-5 py-2 text-sm font-medium bg-white text-[#2C3930] hover:bg-gray-200 rounded-lg transition-all"
+          >
+            Upgrade to Premium
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
     </div>
   );
 }
