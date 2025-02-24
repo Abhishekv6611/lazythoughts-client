@@ -27,10 +27,14 @@ export default function Section() {
        
       <div className="w-full md:w-4/5 h-full max-h-screen  rounded bg-[#2C3930] p-4 ">
       <div className="space-y-4 px-10 ">
-          {
-           post.length>0&& post?.map((post, index) => (
-              <PostBox key={index} post={post}/>
-            ))
+          {post&&
+           post.length>0?(
+           post?.map((post, index) => (
+             <PostBox key={index} post={post}/>
+           ))
+          ):(
+              <p className="text-center text-gray-400">No post yet</p>
+            )
           }
           </div>
         

@@ -3,6 +3,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { FiMenu } from "react-icons/fi";
 import { FaHome, FaUser, FaCog } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { LiaCrownSolid } from "react-icons/lia";
 
 const SideBar = ({ handleLogout,UserDetails }) => {
   const [isOpen, setIsOpen] = useState(false); // Sidebar toggle state
@@ -32,12 +33,22 @@ const SideBar = ({ handleLogout,UserDetails }) => {
         } sm:w-60 sm:relative`} >
         <div className="flex flex-col items-center py-6 h-full">
           {/* Sidebar Header */}
+         
           <h1
             className={`text-lg font-bold mb-6 transition-opacity ${
               isOpen ? "opacity-100" : "opacity-0 sm:opacity-100"
             }`}
           >
-            {isOpen ? UserDetails?.fullName : UserDetails?.fullName}
+             {
+            UserDetails.premium&&
+            <LiaCrownSolid  color="#EFBF04" 
+            style={{
+              marginLeft: "60px",
+              paddingTop: "10px",
+             fontSize: "2rem",
+             }}/>
+          }
+            { UserDetails?.fullName}
           </h1>
 
           {/* Sidebar Menu Items */}

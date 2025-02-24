@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PremiumModal from "../components/PremiumModal";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { URL } from "../store/url";
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const[userDetails,setUserDetails]=useState()
 
   const UpgradePlans = () => {
     setIsOpen(true);
@@ -20,6 +23,35 @@ const Settings = () => {
       window.location.href='/signin'
     },2000)
 }
+
+
+  // 
+  
+  // 
+
+  useEffect(()=>{
+    const fetchDetails=async()=>{
+    const token=sessionStorage.getItem("token")
+    if(!token){
+      console.log("Token not Found");
+        return;
+    }
+    try {
+       const result= await axios.get(`${URL}/getuserDetails?token=${token}`);
+       setUserDetails(result.data)
+       console.log(userDetails);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  fetchDetails()
+  },[])
+ 
+
+useEffect(()=>{
+  console.log("userDetails",userDetails);
+},[userDetails])
+
 
   return (
     <>
@@ -59,21 +91,38 @@ const Settings = () => {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold mb-2">Idea Limit Reached!!</h2>
-            <p className="mb-4">Upgrade to premium to add more ideas and unlock extra features.</p>
+            {
+              userDetails&&userDetails.premium?
+              <span>
+
+              <h2 className="text-2xl font-bold mb-2">Premium member</h2>
+              <p className="mb-4">Congratulations for you premium membership</p>
+              </span>
+              :
+              <span>
+              <p className="mb-4">Upgrade to premium to add more ideas and unlock extra features.</p>
+              <h2 className="text-2xl font-bold mb-2">Idea Limit Reached!!</h2>
+              </span>
+            }
             <button
               onClick={UpgradePlans}
               className="w-full border hover:bg-[#A27B5C] hover:text-[#DCD7C9] py-2 rounded-lg hover:shadow-md transition-all duration-300"
             >
-              Upgrade to Premium
+             {
+              userDetails&&userDetails.premium?<p className="font-bold">Premium Member</p>: "Upgrade to Premium"
+             } 
             </button>
           </div>
         </div>
 
+
         {/* Modal */}
+        <div className="">
         {isOpen && (
-          <PremiumModal closeModal={closeModal} />
+          <PremiumModal closeModal={closeModal} userDetails={userDetails} />
         )}
+        </div>
+       
       </div>
     </>
   );
