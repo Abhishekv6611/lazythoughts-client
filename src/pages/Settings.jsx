@@ -9,7 +9,7 @@ import { URL } from "../store/url";
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const[userDetails,setUserDetails]=useState()
-
+ const[update,setUpdate]=useState('')
   const UpgradePlans = () => {
     setIsOpen(true);
   };
@@ -45,7 +45,7 @@ const Settings = () => {
     }
   }
   fetchDetails()
-  },[])
+  },[update])
  
 
 useEffect(()=>{
@@ -96,12 +96,12 @@ useEffect(()=>{
               <span>
 
               <h2 className="text-2xl font-bold mb-2">Premium member</h2>
-              <p className="mb-4">Congratulations for you premium membership</p>
+              <p className="mb-4">Congratulation for premium membership</p>
               </span>
               :
               <span>
-              <p className="mb-4">Upgrade to premium to add more ideas and unlock extra features.</p>
               <h2 className="text-2xl font-bold mb-2">Idea Limit Reached!!</h2>
+              <p className="mb-4">Upgrade to premium to add more ideas and unlock extra features.</p>
               </span>
             }
             <button
@@ -117,12 +117,12 @@ useEffect(()=>{
 
 
         {/* Modal */}
-        <div className="">
+   
         {isOpen && (
-          <PremiumModal closeModal={closeModal} userDetails={userDetails} />
+          <PremiumModal closeModal={closeModal} userDetails={userDetails} setUpdate={setUpdate}/>
         )}
-        </div>
-       
+      
+     
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { URL } from "../store/url";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -20,11 +20,10 @@ const tiers = [
   },
 ];
 
-const PremiumModal = ({ closeModal,userDetails }) => {
+const PremiumModal = ({ closeModal ,userDetails ,setUpdate}) => {
 
   const [loading, setLoading] = useState(false);
   const [premium, setPremium] = useState();
-
 
 
 
@@ -70,6 +69,7 @@ const PremiumModal = ({ closeModal,userDetails }) => {
           if (verifyData.success) {
             const token=sessionStorage.getItem("token")
             setPremium(true);
+            setUpdate(true)
             const result=await axios.put(`${URL}/updatetopremium`,{
               premium:true
             },{
@@ -106,7 +106,6 @@ const PremiumModal = ({ closeModal,userDetails }) => {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md">
@@ -157,10 +156,9 @@ const PremiumModal = ({ closeModal,userDetails }) => {
                 onClick={() => handlePayment(tier.price)}
                 className="mt-6 w-full bg-[#A27B5C] text-white py-2 rounded-md text-sm font-semibold shadow-sm hover:bg-[#82634a] transition-all"
                 disabled={loading}
-              >{
-                userDetails&&userDetails.premium? "Already Premium": "Upgrade to Premium"
-              }
-                {loading && "Processing..."}
+              >
+                {userDetails&&userDetails.premium ? "Already Premium" :"Upgrade to Premium"}
+                {loading && "Processing..." }
               </button>
             </div>
           ))}
