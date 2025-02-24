@@ -95,6 +95,13 @@ const PremiumModal = ({ closeModal ,userDetails ,setUpdate}) => {
         theme: {
           color: "#3F4F44",
         },
+        modal: {
+          ondismiss: function () {
+            alert("Payment window closed!");
+          },
+        },
+        // Force payment to open in a new tab
+        redirect: true,
       };
 
       const rzp1 = new window.Razorpay(options);
