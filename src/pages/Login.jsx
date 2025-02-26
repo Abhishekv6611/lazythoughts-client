@@ -76,7 +76,7 @@ const handleLogin = async (e) => {
             Password
           </label>
           <div className="text-sm">
-            <a href="#" className="font-medium text-[#DCD7C9] hover:text-[#d0c8b4]">
+            <a href="/forgotpassword" className="font-medium text-[#DCD7C9] hover:text-[#d0c8b4]">
               Forgot password?
             </a>
           </div>

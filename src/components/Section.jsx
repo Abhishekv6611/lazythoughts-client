@@ -30,7 +30,7 @@ export default function Section() {
           {post&&
            post.length>0?(
            post?.map((post, index) => (
-             <PostBox key={index} post={post}/>
+             <PostBox key={index} post={post} />
            ))
           ):(
               <p className="text-center text-gray-400">No post yet</p>

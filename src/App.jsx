@@ -10,6 +10,8 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Settings from "./pages/Settings";
 import ProtectedLayout from "./ProtectedLayout";
+import ForgotPassword from "./pages/ForgotPassword";
+import  ResetPassword  from "./pages/Restpassword";
 
 
 
@@ -39,6 +41,8 @@ export default function App() {
     <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
    <Route path="/signup" element={token ? <Navigate to="/dashboard" replace /> : <Signup />} />
     <Route path="/signin" element={token ? <Navigate to="/dashboard" replace /> : <Login />} />
+    <Route path="/forgotpassword" element={token ? <Navigate to="/dashboard" replace /> : <ForgotPassword />} />
+    <Route path="/resetpassword/:token" element={token ? <Navigate to="/dashboard" replace /> : <ResetPassword />} />
  
 
       
