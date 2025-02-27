@@ -12,32 +12,40 @@ export default function Login() {
   email:"",
   password:""
  })
-const handleLogin = async (e) => {
+ const handleLogin = async (e) => {
   e.preventDefault();
   try {
     console.log(form);
-    if(!form.email|| !form.password){
-      toast.error("please Fill the form")
-    } else{
-      setIsLoading(true)
-      const response=await axios.post(`${URL}/login`,form)
-      if(response.data.success){
-        toast.success("Login Successfully")
-        sessionStorage.setItem("token",response.data.token)
-        window.dispatchEvent(new Event("storage"));
-        navigate('/dashboard')
-      }else{
-        toast.error("Invalid Email or Password")
-      }
+    
+    if (!form.email || !form.password) {
+      toast.error("Please fill in all fields");
+      return;
     }
 
+    setIsLoading(true);
+
+    const response = await axios.post(`${URL}/login`, form);
+
+    if (response.data.success) {
+      toast.success("Login Successful");
+      sessionStorage.setItem("token", response.data.token);
+      window.dispatchEvent(new Event("storage"));
+      navigate('/dashboard');
+    } else {
+      toast.error("Invalid Email or Password");
+    }
   } catch (error) {
-    console.log(error);
-  }finally {
-      setIsLoading(false); 
+    console.error(error);
+    if (error.response && error.response.status === 401) {
+      toast.error("Invalid Email or Password");
+    } else {
+      toast.error("Check username and password properly");
     }
+  } finally {
+    setIsLoading(false);
+  }
+};
 
-}
 
 
 

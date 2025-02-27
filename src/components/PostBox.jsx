@@ -12,7 +12,6 @@ export default function PostBox({post}) {
     <div   className="pr-2  pl-10 ">
       <div className=" text-white py-10 lg:mt-7 rounded-lg mt-2">
         <div className="flex justify-start">
-        
           <img
             className="w-10 h-10 lg:w-20 lg:h-20 rounded-full -mt-10 p-1 lg:p-2"
             src={post?.userDetails.profilePic || "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg"}

@@ -169,7 +169,7 @@ export default function Userthoughts() {
           {/* Modal for Adding Thought */}
           {isOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md animate-fadeIn">
-            <div className="bg-gradient-to-br from-[#2C3930] to-[#A27B5C] text-white rounded-xl shadow-2xl w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 p-6 relative">
+            <div className="bg-gradient-to-br from-[#2C3930] to-[#2C3930] text-white rounded-xl shadow-2xl w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 p-6 relative">
               {/* Header */}
               <div className="flex justify-between items-center pb-3 border-b border-white/20">
                 <h2 className="text-lg font-semibold tracking-wide">Share Your Thought</h2>
@@ -260,7 +260,7 @@ export default function Userthoughts() {
       </div>
       {editModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md animate-fadeIn">
-        <div className="bg-gradient-to-br from-[#2C3930] to-[#A27B5C] text-white rounded-xl shadow-2xl w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 p-6 relative">
+        <div className="bg-gradient-to-br from-[#2C3930] to-[#2C3930] text-white rounded-xl shadow-2xl w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 p-6 relative">
           {/* Header */}
           <div className="flex justify-between items-center pb-3 border-b border-white/20">
             <h2 className="text-lg font-semibold tracking-wide">Edit Your Thought</h2>

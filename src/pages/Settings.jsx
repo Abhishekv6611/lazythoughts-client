@@ -16,18 +16,19 @@ const Settings = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  const handleLogout=()=>{
-    toast.success("Logout successfully")
+  const Accountdelete=()=>{
+   const token=sessionStorage.getItem("token")
+   const res=axios.delete(`${URL}/deleteaccount/${token}`)
+    if(res){
+      toast.success("Account Deleted Successfully")
     setTimeout(()=>{
         sessionStorage.removeItem("token");
       window.location.href='/signin'
     },2000)
+  }
 }
 
 
-  // 
-  
-  // 
 
   useEffect(()=>{
     const fetchDetails=async()=>{
@@ -64,10 +65,11 @@ useEffect(()=>{
             </button>
           </Link>
           <button
-            onClick={handleLogout}
-            className="flex gap-2 items-center text-[#3F4F44] bg-[#A27B5C] hover:bg-[#946f50] cursor-pointer p-2 rounded"
+          
+            onClick={Accountdelete}
+            className="flex gap-2 items-center text-white bg-red-600 hover:bg-red-700 cursor-pointer p-2 rounded"
           >
-            <p className="font-semibold">Logout</p>
+            <p className="font-semibold">Delete Account</p>
             <IoIosLogOut size={20} />
           </button>
         </div>

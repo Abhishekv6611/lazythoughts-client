@@ -40,11 +40,11 @@ export default function Dashboard() {
   }, []);
 
   const handleLogout = () => {
-    toast.success('Logout successfully!')
     setTimeout(() => {
       sessionStorage.removeItem("token");
       window.location.href = "/signin";
-     }, 2000);
+    }, 2000);
+    toast.success('Logout successfully!')
   };
 
   return (
